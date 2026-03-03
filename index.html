@@ -3,40 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Romanelo Digital | Smart Wood Tracking</title>
+    <title>Rastroom | Rastreio de peças inteligentes</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔨</text></svg>">
 </head>
 <body class="bg-zinc-900 text-zinc-100 min-h-screen font-sans">
 
-    
-
     <nav class="bg-zinc-800 border-b border-zinc-700 p-4 sticky top-0 z-50 shadow-2xl">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-            <h1 class="text-xl font-bold tracking-tighter text-orange-500 italic">ROMANELO <span class="text-white">DIGITAL</span></h1>
-            <div class="flex flex-wrap gap-2 justify-center" id="nav-buttons">
-                <button data-tab="admin" class="p-2 px-4 rounded bg-orange-600 hover:bg-orange-500 transition font-bold"><i class="fas fa-plus mr-2"></i>Novo Pedido</button>
-                <button data-tab="operador" class="p-2 px-4 rounded bg-zinc-700 hover:bg-zinc-600 transition"><i class="fas fa-spray-can mr-2"></i>Processos (Lixa/Pintura)</button>
-                <button data-tab="montagem" class="p-2 px-4 rounded bg-zinc-700 hover:bg-zinc-600 transition"><i class="fas fa-hammer mr-2"></i>Montagem</button>
-                <button data-tab="gestao" class="p-2 px-4 rounded bg-zinc-700 hover:bg-zinc-600 transition"><i class="fas fa-chart-line mr-2"></i>Gestão</button>
+        <div class="max-w-7xl mx-auto flex flex-col xl:flex-row justify-between items-center gap-4">
+            <h1 class="text-xl md:text-2xl font-bold tracking-tighter text-orange-500 italic text-center w-full xl:w-auto">
+                RASTROOM
+                <!-- RASTROOM <span class="text-white">ROOM</span> -->
+            </h1>
+            
+            <div class="grid grid-cols-2 sm:flex sm:flex-wrap gap-2 justify-center w-full xl:w-auto" id="nav-buttons">
+                <button data-tab="admin" class="p-2 md:px-4 rounded bg-orange-600 hover:bg-orange-500 transition font-bold text-xs md:text-sm flex items-center justify-center">
+                    <i class="fas fa-plus md:mr-2"></i><span class="hidden md:inline">Cadastro</span><span class="md:hidden ml-2">Pedido</span>
+                </button>
+                <button data-tab="operador" class="p-2 md:px-4 rounded bg-zinc-700 hover:bg-zinc-600 transition text-xs md:text-sm flex items-center justify-center">
+                    <i class="fas fa-spray-can md:mr-2"></i><span class="hidden md:inline">Processos (Lixa/Pintura)</span><span class="md:hidden ml-2">Processos</span>
+                </button>
+                <button data-tab="montagem" class="p-2 md:px-4 rounded bg-zinc-700 hover:bg-zinc-600 transition text-xs md:text-sm flex items-center justify-center">
+                    <i class="fas fa-hammer mr-2"></i>Montagem
+                </button>
+                <button data-tab="gestao" class="p-2 md:px-4 rounded bg-zinc-700 hover:bg-zinc-600 transition text-xs md:text-sm flex items-center justify-center">
+                    <i class="fas fa-chart-line mr-2"></i>Gestão
+                </button>
+                <button id="btn-logout" class="hidden p-2 md:px-4 rounded bg-red-500/20 text-red-500 border border-red-500/50 hover:bg-red-500/30 transition text-xs md:text-sm flex items-center justify-center col-span-2 sm:col-span-1">
+                    <i class="fas fa-sign-out-alt mr-2"></i>Sair
+                </button>
             </div>
         </div>
     </nav>
 
-    <main class="max-w-7xl mx-auto p-4 pb-24">
+    <main class="max-w-7xl mx-auto p-4 md:p-6 pb-24">
         
         <section id="tab-admin" class="tab-content">
-            <div class="bg-zinc-800 p-6 rounded-xl border border-zinc-700 shadow-xl">
-                <div class="flex justify-between items-center mb-6">
-                    <h2 class="text-2xl font-bold flex items-center"><i class="fas fa-edit mr-3 text-orange-500"></i>Configurar Engenharia do Pedido</h2>
+            <div class="bg-zinc-800 p-4 md:p-6 rounded-xl border border-zinc-700 shadow-xl">
+                <div class="mb-6 border-b border-zinc-700 pb-4">
+                    <h2 class="text-xl md:text-2xl font-bold flex items-center"><i class="fas fa-edit mr-3 text-orange-500"></i>Cadastro de pedidos</h2>
                 </div>
                 
-                <form id="orderForm" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <form id="orderForm" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
                     <div class="space-y-4">
-                        <h3 class="text-orange-500 font-bold uppercase text-xs tracking-widest border-b border-zinc-700 pb-2">Dados do Cliente</h3>
+                        <h3 class="text-orange-500 font-bold uppercase text-xs tracking-widest border-b border-zinc-700 pb-2">Dados do Pedido</h3>
                         <div>
                             <label class="block text-sm mb-1 opacity-70">Nome do Cliente</label>
                             <input type="text" id="cliente" class="w-full bg-zinc-900 border border-zinc-600 p-3 rounded focus:border-orange-500 outline-none" placeholder="Ex: Loft Design" required>
@@ -47,8 +61,7 @@
                         </div>
                         <div>
                             <label class="block text-sm mb-1 opacity-70">Catálogo de Produtos</label>
-                            <select id="select-catalogo" class="w-full bg-zinc-900 border border-zinc-700 p-2 rounded text-sm text-zinc-300 focus:border-orange-500 outline-none">
-                             </select>
+                            <select id="select-catalogo" class="w-full bg-zinc-900 border border-zinc-700 p-3 rounded text-sm text-zinc-300 focus:border-orange-500 outline-none"></select>
                         </div>
                         <div id="campo-movel-nome">
                             <label class="block text-sm mb-1 opacity-70">Descrição do Móvel</label>
@@ -57,10 +70,9 @@
                     </div>
 
                     <div class="space-y-4">
-                        <h3 class="text-orange-500 font-bold uppercase text-xs tracking-widest border-b border-zinc-700 pb-2">Peças do Conjunto (DNA)</h3>
-                        <div id="pecas-container" class="space-y-2 max-h-60 overflow-y-auto pr-2">
-                            </div>
-                        <button type="button" id="add-peca" class="text-xs bg-zinc-700 hover:bg-zinc-600 px-3 py-2 rounded transition">
+                        <h3 class="text-orange-500 font-bold uppercase text-xs tracking-widest border-b border-zinc-700 pb-2">Peças do Conjunto</h3>
+                        <div id="pecas-container" class="space-y-2 max-h-48 md:max-h-60 overflow-y-auto pr-2"></div>
+                        <button type="button" id="add-peca" class="w-full text-xs bg-zinc-700 hover:bg-zinc-600 px-3 py-3 md:py-2 rounded transition font-bold">
                             <i class="fas fa-plus mr-1"></i> Adicionar Peça
                         </button>
                         
@@ -81,14 +93,13 @@
                                 <input type="checkbox" name="processo" value="Pintura" checked class="w-5 h-5 accent-orange-500 mr-3"> 
                                 <div><p class="text-sm font-bold">Pintura/Lacca</p><p class="text-[10px] opacity-50">Aplicação de cor e verniz</p></div>
                             </label>
-                            
                         </div>
 
-                        <div class="pt-6 space-y-3">
-                            <button type="submit" class="w-full bg-orange-600 hover:bg-orange-500 text-white font-black py-4 rounded-lg shadow-lg uppercase tracking-tighter transition-all transform hover:-translate-y-1">
-                                <i class="fas fa-layer-group mr-2"></i> Gerar arquivo com marcações
+                        <div class="pt-6 space-y-4">
+                            <button type="submit" class="w-full bg-orange-600 hover:bg-orange-500 text-white font-black py-4 rounded-lg shadow-lg uppercase tracking-tighter transition-all transform hover:-translate-y-1 text-sm md:text-base">
+                                <i class="fas fa-layer-group mr-2"></i> Gerar Lote
                             </button>
-                            <label class="flex items-center justify-center text-xs opacity-50 cursor-pointer">
+                            <label class="flex items-center justify-center text-xs md:text-sm opacity-50 cursor-pointer p-2">
                                 <input type="checkbox" id="retrabalho" class="mr-2 w-4 h-4 accent-red-500"> Marcar como RETRABALHO
                             </label>
                         </div>
@@ -98,148 +109,144 @@
         </section>
 
         <section id="tab-operador" class="tab-content hidden">
-            <div id="scanner-area" class="bg-zinc-800 p-6 rounded-xl border border-zinc-700 text-center">
-                <i class="fas fa-qrcode text-5xl text-orange-500 mb-4"></i>
-                <h2 class="text-xl font-bold mb-4">Bipar Peça (Lixamento/Pintura)</h2>
-                <div class="max-w-xs mx-auto flex gap-2">
-                    <input type="text" id="qrInput" class="w-full bg-zinc-900 border-2 border-orange-500 p-4 rounded text-center text-2xl font-mono focus:ring-4 ring-orange-500/20 outline-none uppercase" placeholder="RD-000-00">
-                    <button id="btn-read-qr" class="bg-orange-600 px-6 rounded font-bold hover:bg-orange-500 transition">LER</button>
+            <div id="scanner-area" class="bg-zinc-800 p-4 md:p-6 rounded-xl border border-zinc-700 text-center shadow-lg">
+                <i class="fas fa-qrcode text-4xl md:text-5xl text-orange-500 mb-4"></i>
+                <h2 class="text-lg md:text-xl font-bold mb-4">Bipar Peça (Lixamento/Pintura)</h2>
+                <div class="max-w-md mx-auto flex flex-col sm:flex-row gap-3">
+                    <input type="text" id="qrInput" class="w-full bg-zinc-900 border-2 border-orange-500 p-3 md:p-4 rounded text-center text-xl md:text-2xl font-mono focus:ring-4 ring-orange-500/20 outline-none uppercase" placeholder="RD-000-00">
+                    <button id="btn-read-qr" class="w-full sm:w-auto bg-orange-600 py-3 sm:px-8 rounded font-bold hover:bg-orange-500 transition text-lg">LER</button>
                 </div>
             </div>
 
-            <div id="instrucao-peça" class="hidden mt-6 rounded-xl overflow-hidden border-4 border-zinc-700 shadow-2xl">
-                <div id="cor-fundo-pintura" class="p-8 transition-colors duration-500">
-                    <div class="glass p-6 rounded-lg text-zinc-900 relative">
-                        <div id="alert-retrabalho" class="hidden absolute -top-4 -right-4 bg-red-600 text-white px-4 py-2 rounded-lg font-black animate-bounce shadow-xl border-2 border-white">RETRABALHO</div>
+            <div id="instrucao-peça" class="hidden mt-6 rounded-xl overflow-hidden border-2 md:border-4 border-zinc-700 shadow-2xl">
+                <div id="cor-fundo-pintura" class="p-4 md:p-8 transition-colors duration-500">
+                    <div class="glass p-4 md:p-6 rounded-lg text-zinc-900 relative">
+                        <div id="alert-retrabalho" class="hidden absolute -top-4 -right-2 md:-right-4 bg-red-600 text-white px-3 md:px-4 py-1 md:py-2 rounded-lg font-black animate-bounce shadow-xl border-2 border-white text-xs md:text-base">RETRABALHO</div>
                         
-                        <div class="flex justify-between items-start mb-6 border-b border-black/10 pb-4">
+                        <div class="flex flex-col sm:flex-row justify-between items-start gap-4 mb-6 border-b border-black/10 pb-4">
                             <div>
-                                <span id="status-badge" class="bg-zinc-900 text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase mb-2 inline-block tracking-widest">Aguardando Lixamento</span>
-                                <h3 id="display-movel" class="text-3xl md:text-4xl font-black uppercase leading-tight">Painel Carvalho</h3>
-                                <p id="display-cliente" class="text-sm font-bold opacity-70 italic font-mono mt-1">CLIENTE: LOFT DESIGN</p>
+                                <span id="status-badge" class="bg-zinc-900 text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase mb-2 inline-block tracking-widest">Aguardando</span>
+                                <h3 id="display-movel" class="text-2xl md:text-4xl font-black uppercase leading-tight">Móvel</h3>
+                                <p id="display-cliente" class="text-xs md:text-sm font-bold opacity-70 italic font-mono mt-1">CLIENTE</p>
                             </div>
-                            <div class="text-right">
-                                <p class="text-xs opacity-50 uppercase font-bold">Código da Peça</p>
-                                <p id="display-id" class="text-2xl md:text-3xl font-mono font-black">RD-772-01</p>
-                                <p id="display-nome-peca" class="text-lg font-bold text-orange-600 uppercase mt-1">LATERAL ESQUERDA</p>
+                            <div class="text-left sm:text-right bg-white/30 sm:bg-transparent p-3 sm:p-0 rounded w-full sm:w-auto">
+                                <p class="text-[10px] md:text-xs opacity-50 uppercase font-bold">Código da Peça</p>
+                                <p id="display-id" class="text-xl md:text-3xl font-mono font-black">RD-000-00</p>
+                                <p id="display-nome-peca" class="text-sm md:text-lg font-bold text-orange-600 uppercase mt-1">NOME DA PEÇA</p>
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
-    
-                        <div>
-                            <div class="bg-black/5 p-4 rounded-lg flex flex-col justify-center">
-                                <h4 class="font-bold mb-2 flex items-center text-xs uppercase">
-                                    <i class="fas fa-palette mr-2"></i> Cor / Acabamento
-                                </h4>
-                                <div class="flex items-center gap-3">
-                                    <div id="display-cor-visual" class="w-12 h-12 rounded-full shadow-inner border-2 border-white"></div>
-                                    <p id="display-cor-texto" class="font-mono text-lg font-bold">#FFFFFF</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 pt-2">
+                            <div class="space-y-4">
+                                <div class="bg-black/5 p-4 rounded-lg flex flex-col justify-center border border-black/5">
+                                    <h4 class="font-bold mb-2 flex items-center text-xs uppercase">
+                                        <i class="fas fa-palette mr-2"></i> Cor / Acabamento
+                                    </h4>
+                                    <div class="flex items-center gap-3">
+                                        <div id="display-cor-visual" class="w-10 h-10 md:w-12 md:h-12 rounded-full shadow-inner border-2 border-white"></div>
+                                        <p id="display-cor-texto" class="font-mono text-base md:text-lg font-bold">#FFFFFF</p>
+                                    </div>
+                                </div>
+                                <div id="detalhes-tecnicos-processo"></div>
+                            </div>
+
+                            <div class="bg-white/40 p-4 md:p-6 rounded-lg border border-black/10 flex flex-col justify-center">
+                                <h4 class="font-bold text-center mb-2 text-xs uppercase">Tempo na Estação</h4>
+                                <div id="cronometro" class="text-4xl sm:text-5xl font-mono font-black text-center py-2 md:py-4 tracking-tighter">00:00:00</div>
+                                <div class="flex flex-col xl:flex-row gap-2 mt-4">
+                                    <button id="btn-start-timer" class="w-full bg-zinc-900 text-white p-3 rounded-lg font-bold hover:bg-black transition text-sm">
+                                        <i class="fas fa-play mr-2"></i>INICIAR
+                                    </button>
+                                    <button id="btn-stop-timer" class="w-full bg-orange-600 text-white p-3 rounded-lg font-bold hover:bg-orange-500 transition shadow-lg text-sm">
+                                        <i class="fas fa-check mr-2"></i>CONCLUIR
+                                    </button>
                                 </div>
                             </div>
-
-                            <div id="detalhes-tecnicos-processo">
-                                </div>
-                        </div>
-
-                        <div class="bg-white/40 p-4 rounded-lg border border-black/10">
-                            <h4 class="font-bold text-center mb-2 text-xs uppercase">Tempo na Estação</h4>
-                            <div id="cronometro" class="text-5xl font-mono font-black text-center py-2 tracking-tighter">00:00:00</div>
-                            <div class="flex gap-2 mt-4">
-                                <button id="btn-start-timer" class="flex-1 bg-zinc-900 text-white p-3 rounded-lg font-bold hover:bg-black transition text-sm">
-                                    <i class="fas fa-play mr-2"></i>INICIAR
-                                </button>
-                                <button id="btn-stop-timer" class="flex-1 bg-orange-600 text-white p-3 rounded-lg font-bold hover:bg-orange-500 transition shadow-lg text-sm">
-                                    <i class="fas fa-check mr-2"></i>CONCLUIR
-                                </button>
-                            </div>
-                        </div>
-                     </div>
+                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
         <section id="tab-montagem" class="tab-content hidden">
-            <div class="bg-zinc-800 p-6 rounded-xl border border-zinc-700 shadow-xl max-w-3xl mx-auto">
-                <div class="text-center mb-8">
-                    <i class="fas fa-boxes text-5xl text-blue-500 mb-4"></i>
-                    <h2 class="text-2xl font-bold text-white mb-2">Conferência de Kit (Montagem)</h2>
-                    <p class="text-sm text-zinc-400">Bipe qualquer peça para verificar se o lote completo do móvel já está liberado pela pintura.</p>
+            <div class="bg-zinc-800 p-4 md:p-6 rounded-xl border border-zinc-700 shadow-xl max-w-3xl mx-auto">
+                <div class="text-center mb-6 md:mb-8">
+                    <i class="fas fa-boxes text-4xl md:text-5xl text-blue-500 mb-4"></i>
+                    <h2 class="text-xl md:text-2xl font-bold text-white mb-2">Conferência de Kit</h2>
+                    <p class="text-xs md:text-sm text-zinc-400">Bipe uma peça para verificar o lote completo do móvel.</p>
                 </div>
                 
-                <div class="flex gap-4 mb-8">
-                    <input type="text" id="qrInputMontagem" placeholder="Ex: RD-1234-01" 
-                           class="flex-1 bg-zinc-900 border-2 border-blue-500/50 p-4 rounded text-center text-2xl font-mono text-white focus:border-blue-500 focus:ring-4 ring-blue-500/20 outline-none uppercase transition-all">
-                    <button id="btn-verificar-kit" class="bg-blue-600 hover:bg-blue-500 text-white px-8 rounded font-bold transition shadow-lg">
-                        <i class="fas fa-search mr-2"></i> Verificar
+                <div class="flex flex-col sm:flex-row gap-3 mb-6 md:mb-8">
+                    <input type="text" id="qrInputMontagem" placeholder="Ex: RD-1234-01" class="w-full bg-zinc-900 border-2 border-blue-500/50 p-3 md:p-4 rounded text-center text-xl md:text-2xl font-mono text-white focus:border-blue-500 outline-none uppercase transition-all">
+                    <button id="btn-verificar-kit" class="w-full sm:w-auto bg-blue-600 hover:bg-blue-500 text-white py-3 sm:px-8 rounded font-bold transition shadow-lg text-lg">
+                        <i class="fas fa-search mr-2"></i>Verificar
                     </button>
                 </div>
 
-                <div id="painel-checklist-montagem" class="hidden bg-zinc-900 p-6 rounded-lg border border-zinc-700 shadow-inner">
-                    <div class="flex justify-between items-center mb-6 border-b border-zinc-700 pb-4">
+                <div id="painel-checklist-montagem" class="hidden bg-zinc-900 p-4 md:p-6 rounded-lg border border-zinc-700 shadow-inner">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 border-b border-zinc-700 pb-4">
                         <div>
-                            <p class="text-xs text-zinc-500 uppercase font-bold tracking-wider mb-1">Móvel a ser montado:</p>
-                            <h3 id="nome-movel-montagem" class="text-xl font-bold text-white"></h3>
+                            <p class="text-[10px] md:text-xs text-zinc-500 uppercase font-bold tracking-wider mb-1">Móvel a ser montado:</p>
+                            <h3 id="nome-movel-montagem" class="text-lg md:text-xl font-bold text-white leading-tight"></h3>
                         </div>
-                        <span id="status-kit-badge" class="px-4 py-2 rounded text-sm font-bold shadow-sm"></span>
+                        <span id="status-kit-badge" class="px-3 py-1 md:px-4 md:py-2 rounded text-xs md:text-sm font-bold shadow-sm w-full md:w-auto text-center"></span>
                     </div>
                     
-                    <ul id="lista-pecas-montagem" class="space-y-3 mb-8 text-sm font-mono">
-                        </ul>
+                    <ul id="lista-pecas-montagem" class="space-y-2 mb-6 md:mb-8 text-xs md:text-sm font-mono max-h-60 overflow-y-auto pr-2"></ul>
 
-                    <button id="btn-concluir-movel" class="w-full bg-green-600 hover:bg-green-500 text-white px-6 py-4 rounded-lg font-black text-lg transition shadow-lg hidden transform hover:-translate-y-1">
-                        <i class="fas fa-check-double mr-2"></i> FINALIZAR MONTAGEM DO MÓVEL
+                    <button id="btn-concluir-movel" class="w-full bg-green-600 hover:bg-green-500 text-white p-4 rounded-lg font-black text-sm md:text-lg transition shadow-lg hidden">
+                        <i class="fas fa-check-double mr-2"></i> FINALIZAR MONTAGEM
                     </button>
                 </div>
             </div>
         </section>
 
         <section id="tab-gestao" class="tab-content hidden">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                <div class="bg-zinc-800 p-4 rounded-xl border border-zinc-700 text-center shadow-lg">
-                    <p class="text-xs opacity-50 uppercase font-bold">Peças em Produção</p>
-                    <p id="total-producao" class="text-4xl font-black text-orange-500 mt-2">0</p>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 mb-6">
+                <div class="col-span-2 md:col-span-1 bg-zinc-800 p-4 rounded-xl border border-zinc-700 text-center shadow-lg">
+                    <p class="text-[10px] md:text-xs opacity-50 uppercase font-bold">Peças em Produção</p>
+                    <p id="total-producao" class="text-3xl md:text-4xl font-black text-orange-500 mt-1">0</p>
                 </div>
                 <div class="bg-zinc-800 p-4 rounded-xl border border-zinc-700 text-center shadow-lg">
-                    <p class="text-xs opacity-50 uppercase font-bold">Gargalos / Atrasos</p>
-                    <p id="total-gargalos" class="text-4xl font-black text-red-500 mt-2">0</p>
+                    <p class="text-[10px] md:text-xs opacity-50 uppercase font-bold">Gargalos / Atrasos</p>
+                    <p id="total-gargalos" class="text-3xl md:text-4xl font-black text-red-500 mt-1">0</p>
                 </div>
                 <div class="bg-zinc-800 p-4 rounded-xl border border-zinc-700 text-center shadow-lg">
-                    <p class="text-xs opacity-50 uppercase font-bold">Móveis Finalizados</p>
-                    <p id="total-finalizados" class="text-4xl font-black text-green-500 mt-2">0</p>
+                    <p class="text-[10px] md:text-xs opacity-50 uppercase font-bold">Finalizados</p>
+                    <p id="total-finalizados" class="text-3xl md:text-4xl font-black text-green-500 mt-1">0</p>
                 </div>
             </div>
 
-            <div class="bg-zinc-800 p-6 rounded-xl border border-zinc-700 overflow-hidden shadow-xl">
-                <div class="flex justify-between items-center mb-6">
-                    <h2 class="text-xl font-bold"><i class="fas fa-list-alt mr-2 text-orange-500"></i> Monitoramento de Lotes</h2>
-                    <button class="text-xs bg-zinc-700 px-4 py-2 rounded font-bold hover:bg-zinc-600 transition"><i class="fas fa-download mr-2"></i>Exportar CSV</button>
+            <div class="bg-zinc-800 p-4 md:p-6 rounded-xl border border-zinc-700 shadow-xl overflow-hidden">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+                    <h2 class="text-lg md:text-xl font-bold"><i class="fas fa-list-alt mr-2 text-orange-500"></i> Monitoramento</h2>
+                    <button class="w-full sm:w-auto text-xs bg-zinc-700 px-4 py-2 rounded font-bold hover:bg-zinc-600 transition">
+                        <i class="fas fa-download mr-2"></i>Exportar CSV
+                    </button>
                 </div>
                 <div class="overflow-x-auto rounded-lg border border-zinc-700">
-                    <table class="w-full text-left border-collapse">
+                    <table class="w-full text-left border-collapse min-w-[600px]">
                         <thead>
                             <tr class="bg-zinc-900 text-zinc-400 border-b border-zinc-700 text-xs uppercase tracking-widest">
-                                <th class="p-4 font-bold">Lote/Móvel</th>
-                                <th class="p-4 font-bold">Cliente</th>
-                                <th class="p-4 font-bold">Progresso</th>
-                                <th class="p-4 font-bold">Tempo Total</th>
-                                <th class="p-4 font-bold">Status</th>
+                                <th class="p-3 md:p-4 font-bold">Lote/Móvel</th>
+                                <th class="p-3 md:p-4 font-bold">Cliente</th>
+                                <th class="p-3 md:p-4 font-bold">Progresso</th>
+                                <th class="p-3 md:p-4 font-bold">Tempo Total</th>
+                                <th class="p-3 md:p-4 font-bold">Status</th>
                             </tr>
                         </thead>
-                        <tbody id="lista-producao" class="divide-y divide-zinc-700/50">
-                            </tbody>
+                        <tbody id="lista-producao" class="divide-y divide-zinc-700/50"></tbody>
                     </table>
                 </div>
             </div>
         </section>
     </main>
 
-    <div id="error-alert" class="fixed bottom-10 left-1/2 -translate-x-1/2 hidden bg-red-600 text-white p-6 rounded-2xl shadow-2xl z-[100] flex items-center gap-4 border-4 border-white animate-bounce">
-        <i class="fas fa-hand-paper text-4xl"></i>
+    <div id="error-alert" class="fixed bottom-4 md:bottom-10 left-1/2 -translate-x-1/2 hidden bg-red-600 text-white p-4 md:p-6 rounded-2xl shadow-2xl z-[100] w-[90%] md:w-auto max-w-md flex items-center gap-4 border-2 md:border-4 border-white animate-bounce">
+        <i class="fas fa-hand-paper text-3xl md:text-4xl"></i>
         <div>
-            <h4 class="font-black text-xl italic uppercase">Atenção!</h4>
-            <p id="error-msg" class="font-bold opacity-90"></p>
+            <h4 class="font-black text-lg md:text-xl italic uppercase">Atenção!</h4>
+            <p id="error-msg" class="font-bold opacity-90 text-sm md:text-base"></p>
         </div>
     </div>
 
