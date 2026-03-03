@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Romanelo Digital | Smart Wood Tracking</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .glass { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
+        .btn-industrial { transition: all 0.2s; active: scale(0.95); }
+        @keyframes pulse-red { 0%, 100% { background-color: #ef4444; } 50% { background-color: #7f1d1d; } }
+        .gargalo { animation: pulse-red 2s infinite; color: white !important; }
+    </style>
+</head>
+<body class="bg-zinc-900 text-zinc-100 min-h-screen font-sans">
+
+    <nav class="bg-zinc-800 border-b border-zinc-700 p-4 sticky top-0 z-50 shadow-2xl">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <h1 class="text-xl font-bold tracking-tighter text-orange-500">ROMANELO <span class="text-white">DIGITAL</span></h1>
+            <div class="flex gap-2">
+                <button onclick="switchTab('admin')" class="p-2 px-4 rounded bg-zinc-700 hover:bg-zinc-600 transition"><i class="fas fa-plus mr-2"></i>Novo Pedido</button>
+                <button onclick="switchTab('operador')" class="p-2 px-4 rounded bg-zinc-700 hover:bg-zinc-600 transition"><i class="fas fa-qrcode mr-2"></i>Chão de Fábrica</button>
+                <button onclick="switchTab('gestao')" class="p-2 px-4 rounded bg-zinc-700 hover:bg-zinc-600 transition"><i class="fas fa-chart-line mr-2"></i>Gestão</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto p-4 pb-24">
+        
+        <section id="tab-admin" class="tab-content">
+            <div class="bg-zinc-800 p-6 rounded-xl border border-zinc-700 shadow-xl">
+                <h2 class="text-2xl font-bold mb-6 flex items-center"><i class="fas fa-edit mr-3 text-orange-500"></i>Cadastrar Novo Pedido</h2>
+                <form id="orderForm" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-1">Cliente</label>
+                            <input type="text" id="cliente" class="w-full bg-zinc-900 border border-zinc-600 p-3 rounded" placeholder="Ex: Loft Design" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-1">Móvel/Peça</label>
+                            <input type="text" id="movel" class="w-full bg-zinc-900 border border-zinc-600 p-3 rounded" placeholder="Ex: Painel Carvalho" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-1">Cor da Pintura</label>
+                            <input type="color" id="cor" class="w-full h-14 bg-zinc-900 border border-zinc-600 p-1 rounded cursor-pointer" value="#d4a373">
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <label class="block text-sm font-medium mb-1">Processos Requeridos</label>
+                        <div class="grid grid-cols-1 gap-3">
+                            <label class="flex items-center p-3 bg-zinc-900 rounded border border-zinc-700 cursor-pointer">
+                                <input type="checkbox" name="processo" value="Lixamento" checked class="w-5 h-5 accent-orange-500 mr-3"> Lixamento Profissional
+                            </label>
+                            <label class="flex items-center p-3 bg-zinc-900 rounded border border-zinc-700 cursor-pointer">
+                                <input type="checkbox" name="processo" value="Pintura" checked class="w-5 h-5 accent-orange-500 mr-3"> Pintura Lacca
+                            </label>
+                            <label class="flex items-center p-3 bg-zinc-900 rounded border border-zinc-700 cursor-pointer">
+                                <input type="checkbox" name="processo" value="Montagem" checked class="w-5 h-5 accent-orange-500 mr-3"> Montagem Final
+                            </label>
+                        </div>
+                        <button type="submit" class="w-full bg-orange-600 hover:bg-orange-500 text-white font-bold py-4 rounded-lg shadow-lg uppercase tracking-wider transition-all">
+                            <i class="fas fa-dna mr-2"></i> Gerar marcação da Peça
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <section id="tab-operador" class="tab-content hidden">
+            <div id="scanner-area" class="bg-zinc-800 p-6 rounded-xl border border-zinc-700 text-center">
+                <div class="mb-6">
+                    <i class="fas fa-barcode-read text-6xl text-orange-500 mb-4"></i>
+                    <h2 class="text-xl font-bold">Simulador de Leitura QR</h2>
+                    <p class="text-zinc-400">Insira o código da peça gravado em baixo relevo</p>
+                </div>
+                <div class="max-w-xs mx-auto flex gap-2">
+                    <input type="text" id="qrInput" class="w-full bg-zinc-900 border-2 border-orange-500 p-4 rounded text-center text-2xl font-mono" placeholder="RD-000">
+                    <button onclick="readQR()" class="bg-orange-600 px-6 rounded font-bold">LER</button>
+                </div>
+                <div id="lista-recentes" class="mt-6 flex flex-wrap justify-center gap-2"></div>
+            </div>
+
+            <div id="instrucao-peça" class="hidden mt-6 rounded-xl overflow-hidden border-4 border-zinc-700">
+                <div id="cor-fundo-pintura" class="p-8 transition-colors duration-500">
+                    <div class="glass p-6 rounded-lg text-zinc-900 shadow-2xl">
+                        <div class="flex justify-between items-start mb-6">
+                            <div>
+                                <span id="status-badge" class="bg-zinc-900 text-white px-3 py-1 rounded-full text-xs font-bold uppercase mb-2 inline-block">Aguardando</span>
+                                <h3 id="display-movel" class="text-3xl font-black uppercase">---</h3>
+                                <p id="display-cliente" class="text-lg opacity-75">Cliente: ---</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-sm font-bold uppercase opacity-50">Código da Peça</p>
+                                <p id="display-id" class="text-2xl font-mono font-bold">RD-XXX</p>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 border-t border-zinc-300 pt-6">
+                            <div>
+                                <h4 class="font-bold mb-2 flex items-center"><i class="fas fa-vial mr-2"></i> Receita da Tinta</h4>
+                                <ul id="receita-tinta" class="space-y-2 text-sm italic">
+                                    <li>- Base PU Branca: 70%</li>
+                                    <li>- Pigmento Concentrado: 25%</li>
+                                    <li>- Catalisador: 5%</li>
+                                </ul>
+                            </div>
+                            <div class="bg-white/50 p-4 rounded-lg">
+                                <h4 class="font-bold text-center mb-2">CRONÔMETRO DE PRODUÇÃO</h4>
+                                <div id="cronometro" class="text-4xl font-mono font-bold text-center py-2">00:00:00</div>
+                                <div class="flex gap-2 mt-4">
+                                    <button id="btn-iniciar" onclick="controlarTempo('start')" class="flex-1 bg-green-600 text-white p-4 rounded-lg font-bold btn-industrial"><i class="fas fa-play"></i> INICIAR</button>
+                                    <button id="btn-finalizar" onclick="controlarTempo('stop')" class="flex-1 bg-red-600 text-white p-4 rounded-lg font-bold btn-industrial"><i class="fas fa-check"></i> FINALIZAR</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tab-gestao" class="tab-content hidden">
+            <div class="grid grid-cols-1 gap-6">
+                <div class="bg-zinc-800 p-6 rounded-xl border border-zinc-700">
+                    <h2 class="text-xl font-bold mb-4">Painel de Acompanhamento em Tempo Real</h2>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead>
+                                <tr class="text-zinc-500 border-b border-zinc-700">
+                                    <th class="p-3">ID/Peça</th>
+                                    <th class="p-3">Setor Atual</th>
+                                    <th class="p-3">Tempo Gasto</th>
+                                    <th class="p-3">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="lista-producao">
+                                </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="error-alert" class="fixed top-20 left-1/2 -translate-x-1/2 hidden bg-red-600 text-white p-6 rounded-2xl shadow-2xl z-[100] flex items-center gap-4 border-4 border-white animate-bounce">
+        <i class="fas fa-exclamation-triangle text-4xl"></i>
+        <div>
+            <h4 class="font-black text-xl">BARREIRA DE QUALIDADE!</h4>
+            <p id="error-msg">Não é possível prosseguir sem finalizar a pintura.</p>
+        </div>
+    </div>
+
+    <script>
+        // --- BANCO DE DADOS SIMULADO ---
+        let orders = JSON.parse(localStorage.getItem('romanelo_orders')) || [];
+        let currentPiece = null;
+        let timerInterval = null;
+        let seconds = 0;
+
+        // --- NAVEGAÇÃO ---
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.add('hidden'));
+            document.getElementById('tab-' + tabId).classList.remove('hidden');
+            if(tabId === 'gestao') renderGestao();
+        }
+
+        // --- ADMIN: CADASTRO ---
+        document.getElementById('orderForm').onsubmit = (e) => {
+            e.preventDefault();
+            const id = 'RD-' + Math.floor(100 + Math.random() * 900);
+            const checkboxes = document.querySelectorAll('input[name="processo"]:checked');
+            const processos = Array.from(checkboxes).map(cb => cb.value);
+
+            const newOrder = {
+                id,
+                cliente: document.getElementById('cliente').value,
+                movel: document.getElementById('movel').value,
+                cor: document.getElementById('cor').value,
+                processos: processos,
+                status: 'Lixamento', // Começa no primeiro
+                historico: {},
+                tempoTotal: 0,
+                concluido: []
+            };
+
+            orders.push(newOrder);
+            localStorage.setItem('romanelo_orders', JSON.stringify(orders));
+            alert(`DNA da Peça ${id} gerado com sucesso!`);
+            e.target.reset();
+            switchTab('operador');
+            document.getElementById('qrInput').value = id;
+        };
+
+        // --- OPERADOR: LEITURA E PROCESSO ---
+        function readQR() {
+            const inputId = document.getElementById('qrInput').value.toUpperCase();
+            const piece = orders.find(o => o.id === inputId);
+
+            if (piece) {
+                currentPiece = piece;
+                document.getElementById('instrucao-peça').classList.remove('hidden');
+                document.getElementById('display-movel').innerText = piece.movel;
+                document.getElementById('display-cliente').innerText = `Cliente: ${piece.cliente}`;
+                document.getElementById('display-id').innerText = piece.id;
+                document.getElementById('status-badge').innerText = piece.status;
+                document.getElementById('cor-fundo-pintura').style.backgroundColor = piece.cor;
+                
+                // Reset timer visuals
+                seconds = piece.tempoTotal || 0;
+                updateTimerDisplay();
+                
+                // Mudar UI baseado no setor
+                if(piece.status === 'Montagem') {
+                    document.getElementById('btn-finalizar').classList.replace('bg-red-600', 'bg-blue-600');
+                    document.getElementById('btn-finalizar').innerHTML = '<i class="fas fa-box-open"></i> FINALIZAR MONTAGEM';
+                }
+            } else {
+                alert("Peça não encontrada no sistema.");
+            }
+        }
+
+        function controlarTempo(acao) {
+            if (acao === 'start') {
+                if(timerInterval) return;
+                timerInterval = setInterval(() => {
+                    seconds++;
+                    updateTimerDisplay();
+                }, 1000);
+                document.getElementById('btn-iniciar').classList.add('opacity-50');
+            } else {
+                // LOGICA DE BARREIRA DE QUALIDADE
+                if (currentPiece.status === 'Montagem') {
+                    const pinturaConcluida = currentPiece.concluido.includes('Pintura');
+                    if (!pinturaConcluida) {
+                        showError("BLOQUEIO: Pintura não detectada! Peça não pode ser montada sem acabamento.");
+                        return;
+                    }
+                }
+
+                clearInterval(timerInterval);
+                timerInterval = null;
+                document.getElementById('btn-iniciar').classList.remove('opacity-50');
+                
+                // Avançar Status
+                currentPiece.concluido.push(currentPiece.status);
+                currentPiece.tempoTotal = seconds;
+                
+                if(currentPiece.status === 'Lixamento') currentPiece.status = 'Pintura';
+                else if(currentPiece.status === 'Pintura') currentPiece.status = 'Montagem';
+                else currentPiece.status = 'EXPEDIÇÃO';
+
+                localStorage.setItem('romanelo_orders', JSON.stringify(orders));
+                alert(`Etapa concluída! Próximo passo: ${currentPiece.status}`);
+                readQR(); // Refresh UI
+            }
+        }
+
+        function updateTimerDisplay() {
+            const hrs = Math.floor(seconds / 3600).toString().padStart(2, '0');
+            const mins = Math.floor((seconds % 3600) / 60).toString().padStart(2, '0');
+            const secs = (seconds % 60).toString().padStart(2, '0');
+            document.getElementById('cronometro').innerText = `${hrs}:${mins}:${secs}`;
+        }
+
+        // --- GESTÃO: LISTAGEM ---
+        function renderGestao() {
+            const container = document.getElementById('lista-producao');
+            container.innerHTML = '';
+            
+            orders.forEach(o => {
+                const isGargalo = o.tempoTotal > 30; // 30 segundos para fins de teste
+                const tr = document.createElement('tr');
+                tr.className = `border-b border-zinc-700 ${isGargalo ? 'gargalo' : ''}`;
+                tr.innerHTML = `
+                    <td class="p-3 font-bold">${o.id}<br><span class="text-xs font-normal opacity-50">${o.movel}</span></td>
+                    <td class="p-3">${o.status}</td>
+                    <td class="p-3 font-mono">${o.tempoTotal}s</td>
+                    <td class="p-3">
+                        ${isGargalo ? '<span class="bg-white text-red-600 text-[10px] font-bold px-2 py-1 rounded">GARGALO</span>' : '<span class="text-green-400">Normal</span>'}
+                    </td>
+                `;
+                container.appendChild(tr);
+            });
+        }
+
+        function showError(msg) {
+            const alertBox = document.getElementById('error-alert');
+            document.getElementById('error-msg').innerText = msg;
+            alertBox.classList.remove('hidden');
+            setTimeout(() => alertBox.classList.add('hidden'), 4000);
+        }
+    </script>
+</body>
+</html>

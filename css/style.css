@@ -1,0 +1,22 @@
+.glass { 
+    background: rgba(255, 255, 255, 0.95); 
+    backdrop-filter: blur(10px); 
+}
+
+.btn-industrial { 
+    transition: all 0.2s; 
+}
+
+.btn-industrial:active { 
+    transform: scale(0.95); 
+}
+
+@keyframes pulse-red { 
+    0%, 100% { background-color: #ef4444; } 
+    50% { background-color: #7f1d1d; } 
+}
+
+.gargalo { 
+    animation: pulse-red 2s infinite; 
+    color: white !important; 
+}
