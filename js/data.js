@@ -1,44 +1,48 @@
 export const db = {
-    // Lista de Usuários e Permissões
     usuarios: [
         { id: 1, nome: "Ricardo Admin", role: "admin", senha: "123" },
         { id: 2, nome: "João Lixador", role: "producao", senha: "456" },
         { id: 3, nome: "Ana Montagem", role: "montagem", senha: "789" }
     ],
 
-    // Definição dos Setores (Status possíveis)
-    setores: ["Cadastro", "Lixamento", "Pintura", "Montagem", "Expedição"],
+    instrucoesTecnicas: {
+        "Lixamento": {
+            titulo: "Preparação de Superfície",
+            passos: ["Lixa Grão 150 (Desbaste)", "Lixa Grão 220 (Acabamento)", "Remover pó com ar comprimido"],
+            icone: "fa-screwdriver-wrench"
+        },
+        "Pintura": {
+            titulo: "Aplicação de Acabamento",
+            passos: ["Catalisador: 20% PU", "Diluente: 10% Thinner", "Pressão Pistola: 35 PSI", "Tonalidade: Conforme Amostra"],
+            icone: "fa-fill-drip"
+        }
+    },
 
-    // Onde a mágica acontece: Pedidos Complexos
     pedidos: [
         {
             id: "RD-772",
             cliente: "Loft Design",
             contato: "(11) 99999-9999",
             movel: "Armário de Cozinha Premium",
-            dataCriacao: "2024-05-20",
+            cor: "#d4a373",
             retrabalho: false,
-            
-            // Estrutura Mãe e Filhas
+            tempoTotalProducao: 120,
             pecas: [
                 { 
-                    id_peca: "772-01", 
+                    id_peca: "RD-772-01", // Corrigido para bater com o padrão gerado
                     nome: "Porta Principal", 
-                    tipo: "filha", 
-                    processos: [
-                        { setor: "Lixamento", tempo: 120, status: "concluido", operador: "João" },
-                        { setor: "Pintura", tempo: 0, status: "pendente", operador: null }
-                    ]
+                    status: "Lixamento", 
+                    tempoTotal: 60,
+                    concluido: [] // Corrigido de 'processos' para 'concluido'
                 },
                 { 
-                    id_peca: "772-02", 
+                    id_peca: "RD-772-02", 
                     nome: "Estrutura Lateral", 
-                    tipo: "filha",
-                    processos: [] 
+                    status: "Pintura",
+                    tempoTotal: 60,
+                    concluido: ["Lixamento"] 
                 }
-            ],
-            statusGeral: "Em Produção",
-            tempoTotalProducao: 0 // Soma de todas as peças
+            ]
         }
     ]
 };
