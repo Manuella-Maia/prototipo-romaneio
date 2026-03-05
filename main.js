@@ -113,7 +113,7 @@ async function gerarEtiquetasLaser(pedido) {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
     doc.setFont("helvetica", "bold");
-    doc.text(`Romanelo Digital - Mapa Laser: ${pedido.id}`, 10, 10);
+    doc.text(`Rastroom - Marcação a Laser: ${pedido.id}`, 10, 10);
     let yPos = 25;
 
     for (const peca of pedido.pecas) {
@@ -136,7 +136,7 @@ document.getElementById('btn-read-qr').onclick = () => {
     const resultado = API.getPecaPorId(inputId);
 
     if (resultado) {
-        // Toca o som de BIP para dar realismo à apresentação
+        // Toca o som de BIP 
         new Audio('https://www.soundjay.com/buttons/beep-07.mp3').play().catch(()=>{});
 
         State.currentOrder = resultado.pedido;

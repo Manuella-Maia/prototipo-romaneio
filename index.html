@@ -17,13 +17,12 @@
 
     <nav class="bg-zinc-800 border-b border-zinc-700 p-4 sticky top-0 z-50 shadow-2xl">
         <div class="max-w-7xl mx-auto flex flex-col xl:flex-row justify-between items-center gap-4">
-            <h1 class="text-xl md:text-2xl font-bold tracking-tighter text-orange-500 italic text-center w-full xl:w-auto">
-                RASTROOM
-                <!-- RASTROOM <span class="text-white">ROOM</span> -->
-            </h1>
+            <h1 class="w-full xl:w-auto flex items-center justify-center xl:justify-start">
+    <img src="img/LOGO2.2.png" alt="Logo Rastroom" class="h-10 md:h-14 w-auto object-contain">
+</h1>
             
             <div class="grid grid-cols-2 sm:flex sm:flex-wrap gap-2 justify-center w-full xl:w-auto" id="nav-buttons">
-                <button data-tab="admin" class="p-2 md:px-4 rounded bg-orange-600 hover:bg-orange-500 transition font-bold text-xs md:text-sm flex items-center justify-center">
+                <button data-tab="admin" class="p-2 md:px-4 rounded bg-zinc-700 hover:bg-zinc-600 transition font-bold text-xs md:text-sm flex items-center justify-center">
                     <i class="fas fa-plus md:mr-2"></i><span class="hidden md:inline">Cadastro</span><span class="md:hidden ml-2">Pedido</span>
                 </button>
                 <button data-tab="operador" class="p-2 md:px-4 rounded bg-zinc-700 hover:bg-zinc-600 transition text-xs md:text-sm flex items-center justify-center">
@@ -47,32 +46,32 @@
         <section id="tab-admin" class="tab-content">
             <div class="bg-zinc-800 p-4 md:p-6 rounded-xl border border-zinc-700 shadow-xl">
                 <div class="mb-6 border-b border-zinc-700 pb-4">
-                    <h2 class="text-xl md:text-2xl font-bold flex items-center"><i class="fas fa-edit mr-3 text-orange-500"></i>Cadastro de pedidos</h2>
+                    <h2 class="text-xl md:text-2xl font-bold flex items-center"><i class="fas fa-edit mr-3 text-corLogo"></i>Cadastro de pedidos</h2>
                 </div>
                 
                 <form id="orderForm" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
                     <div class="space-y-4">
-                        <h3 class="text-orange-500 font-bold uppercase text-xs tracking-widest border-b border-zinc-700 pb-2">Dados do Pedido</h3>
+                        <h3 class="text-roxoClaro font-bold uppercase text-xs tracking-widest border-b border-zinc-700 pb-2">Dados do Pedido</h3>
                         <div>
                             <label class="block text-sm mb-1 opacity-70">Nome do Cliente</label>
-                            <input type="text" id="cliente" class="w-full bg-zinc-900 border border-zinc-600 p-3 rounded focus:border-orange-500 outline-none" placeholder="Ex: Loft Design" required>
+                            <input type="text" id="cliente" class="w-full bg-zinc-900 border border-zinc-600 p-3 rounded focus:border-roxoClaro outline-none" placeholder="Ex: Loft Design" required>
                         </div>
                         <div>
                             <label class="block text-sm mb-1 opacity-70">Contato (WhatsApp)</label>
-                            <input type="text" id="contato" class="w-full bg-zinc-900 border border-zinc-600 p-3 rounded focus:border-orange-500 outline-none" placeholder="(11) 99999-0000">
+                            <input type="text" id="contato" class="w-full bg-zinc-900 border border-zinc-600 p-3 rounded focus:border-roxoClaro outline-none" placeholder="(11) 99999-0000">
                         </div>
                         <div>
                             <label class="block text-sm mb-1 opacity-70">Catálogo de Produtos</label>
-                            <select id="select-catalogo" class="w-full bg-zinc-900 border border-zinc-700 p-3 rounded text-sm text-zinc-300 focus:border-orange-500 outline-none"></select>
+                            <select id="select-catalogo" class="w-full bg-zinc-900 border border-zinc-700 p-3 rounded text-sm text-zinc-300 focus:border-roxoClaro outline-none"></select>
                         </div>
                         <div id="campo-movel-nome">
                             <label class="block text-sm mb-1 opacity-70">Descrição do Móvel</label>
-                            <input type="text" id="movel" class="w-full bg-zinc-900 border border-zinc-600 p-3 rounded focus:border-orange-500 outline-none transition-all" placeholder="Ex: Mesa de Jantar Oval" required>
+                            <input type="text" id="movel" class="w-full bg-zinc-900 border border-zinc-600 p-3 rounded focus:border-roxoClaro outline-none transition-all" placeholder="Ex: Mesa de Jantar Oval" required>
                         </div>
                     </div>
 
                     <div class="space-y-4">
-                        <h3 class="text-orange-500 font-bold uppercase text-xs tracking-widest border-b border-zinc-700 pb-2">Peças do Conjunto</h3>
+                        <h3 class="text-roxoClaro font-bold uppercase text-xs tracking-widest border-b border-zinc-700 pb-2">Peças do Conjunto</h3>
                         <div id="pecas-container" class="space-y-2 max-h-48 md:max-h-60 overflow-y-auto pr-2"></div>
                         <button type="button" id="add-peca" class="w-full text-xs bg-zinc-700 hover:bg-zinc-600 px-3 py-3 md:py-2 rounded transition font-bold">
                             <i class="fas fa-plus mr-1"></i> Adicionar Peça
@@ -85,20 +84,20 @@
                     </div>
 
                     <div class="space-y-4">
-                        <h3 class="text-orange-500 font-bold uppercase text-xs tracking-widest border-b border-zinc-700 pb-2">Fluxo de Produção</h3>
+                        <h3 class="text-roxoClaro font-bold uppercase text-xs tracking-widest border-b border-zinc-700 pb-2">Fluxo de Produção</h3>
                         <div class="space-y-3">
-                            <label class="flex items-center p-3 bg-zinc-900 rounded border border-zinc-700 hover:border-orange-500/50 cursor-pointer transition">
-                                <input type="checkbox" name="processo" value="Lixamento" checked class="w-5 h-5 accent-orange-500 mr-3"> 
+                            <label class="flex items-center p-3 bg-zinc-900 rounded border border-zinc-700 hover:border-roxoClaro cursor-pointer transition">
+                                <input type="checkbox" name="processo" value="Lixamento" checked class="w-5 h-5 accent-corLogo-500 mr-3"> 
                                 <div><p class="text-sm font-bold">Lixamento</p><p class="text-[10px] opacity-50">Preparação da superfície</p></div>
                             </label>
-                            <label class="flex items-center p-3 bg-zinc-900 rounded border border-zinc-700 hover:border-orange-500/50 cursor-pointer transition">
-                                <input type="checkbox" name="processo" value="Pintura" checked class="w-5 h-5 accent-orange-500 mr-3"> 
+                            <label class="flex items-center p-3 bg-zinc-900 rounded border border-zinc-700 hover:border-roxoClaro cursor-pointer transition">
+                                <input type="checkbox" name="processo" value="Pintura" checked class="w-5 h-5 accent-corLogo-500 mr-3"> 
                                 <div><p class="text-sm font-bold">Pintura/Lacca</p><p class="text-[10px] opacity-50">Aplicação de cor e verniz</p></div>
                             </label>
                         </div>
 
                         <div class="pt-6 space-y-4">
-                            <button type="submit" class="w-full bg-orange-600 hover:bg-orange-500 text-white font-black py-4 rounded-lg shadow-lg uppercase tracking-tighter transition-all transform hover:-translate-y-1 text-sm md:text-base">
+                            <button type="submit" class="w-full bg-corLogo hover:bg-roxoClaro text-white font-black py-4 rounded-lg shadow-lg uppercase tracking-tighter transition-all transform hover:-translate-y-1 text-sm md:text-base">
                                 <i class="fas fa-layer-group mr-2"></i> Gerar Lote
                             </button>
                             <label class="flex items-center justify-center text-xs md:text-sm opacity-50 cursor-pointer p-2">
@@ -112,11 +111,11 @@
 
         <section id="tab-operador" class="tab-content hidden">
             <div id="scanner-area" class="bg-zinc-800 p-4 md:p-6 rounded-xl border border-zinc-700 text-center shadow-lg">
-                <i class="fas fa-qrcode text-4xl md:text-5xl text-orange-500 mb-4"></i>
+                <i class="fas fa-qrcode text-4xl md:text-5xl text-verdeAgua mb-4"></i>
                 <h2 class="text-lg md:text-xl font-bold mb-4">Bipar Peça (Lixamento/Pintura)</h2>
                 <div class="max-w-md mx-auto flex flex-col sm:flex-row gap-3">
-                    <input type="text" id="qrInput" class="w-full bg-zinc-900 border-2 border-orange-500 p-3 md:p-4 rounded text-center text-xl md:text-2xl font-mono focus:ring-4 ring-orange-500/20 outline-none uppercase" placeholder="RD-000-00">
-                    <button id="btn-read-qr" class="w-full sm:w-auto bg-orange-600 py-3 sm:px-8 rounded font-bold hover:bg-orange-500 transition text-lg">LER</button>
+                    <input type="text" id="qrInput" class="w-full bg-zinc-900 border-2 border-verdeAgua p-3 md:p-4 rounded text-center text-xl md:text-2xl font-mono focus:ring-4 ring-ciano-500/20 outline-none uppercase" placeholder="RD-000-00">
+                    <button id="btn-read-qr" class="w-full sm:w-auto bg-verdeAgua py-3 sm:px-8 rounded font-bold hover:bg-ciano transition text-lg">LER</button>
                 </div>
             </div>
 
@@ -134,7 +133,7 @@
                             <div class="text-left sm:text-right bg-white/30 sm:bg-transparent p-3 sm:p-0 rounded w-full sm:w-auto">
                                 <p class="text-[10px] md:text-xs opacity-50 uppercase font-bold">Código da Peça</p>
                                 <p id="display-id" class="text-xl md:text-3xl font-mono font-black">RD-000-00</p>
-                                <p id="display-nome-peca" class="text-sm md:text-lg font-bold text-orange-600 uppercase mt-1">NOME DA PEÇA</p>
+                                <p id="display-nome-peca" class="text-sm md:text-lg font-bold text-corLogo uppercase mt-1">NOME DA PEÇA</p>
                             </div>
                         </div>
 
@@ -159,7 +158,7 @@
                                     <button id="btn-start-timer" class="w-full bg-zinc-900 text-white p-3 rounded-lg font-bold hover:bg-black transition text-sm">
                                         <i class="fas fa-play mr-2"></i>INICIAR
                                     </button>
-                                    <button id="btn-stop-timer" class="w-full bg-orange-600 text-white p-3 rounded-lg font-bold hover:bg-orange-500 transition shadow-lg text-sm">
+                                    <button id="btn-stop-timer" class="w-full bg-butaoConcluir text-white p-3 rounded-lg font-bold hover:bg-butaoConcluirHouver transition shadow-lg text-sm">
                                         <i class="fas fa-check mr-2"></i>CONCLUIR
                                     </button>
                                 </div>
@@ -207,7 +206,7 @@
             <div class="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 mb-6">
                 <div class="col-span-2 md:col-span-1 bg-zinc-800 p-4 rounded-xl border border-zinc-700 text-center shadow-lg">
                     <p class="text-[10px] md:text-xs opacity-50 uppercase font-bold">Peças em Produção</p>
-                    <p id="total-producao" class="text-3xl md:text-4xl font-black text-orange-500 mt-1">0</p>
+                    <p id="total-producao" class="text-3xl md:text-4xl font-black text-texto mt-1">0</p>
                 </div>
                 <div class="bg-zinc-800 p-4 rounded-xl border border-zinc-700 text-center shadow-lg">
                     <p class="text-[10px] md:text-xs opacity-50 uppercase font-bold">Gargalos / Atrasos</p>
@@ -221,7 +220,7 @@
 
             <div class="bg-zinc-800 p-4 md:p-6 rounded-xl border border-zinc-700 shadow-xl overflow-hidden">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
-                    <h2 class="text-lg md:text-xl font-bold"><i class="fas fa-list-alt mr-2 text-orange-500"></i> Monitoramento</h2>
+                    <h2 class="text-lg md:text-xl font-bold"><i class="fas fa-list-alt mr-2 text-roxoClaro"></i> Monitoramento</h2>
                     <button class="w-full sm:w-auto text-xs bg-zinc-700 px-4 py-2 rounded font-bold hover:bg-zinc-600 transition">
                         <i class="fas fa-download mr-2"></i>Exportar CSV
                     </button>

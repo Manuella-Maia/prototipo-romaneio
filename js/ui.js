@@ -97,7 +97,7 @@ export const UI = {
             return `
                 <tr class="border-b border-zinc-700 hover:bg-zinc-800/50 transition">
                     <td class="p-3">
-                        <span class="font-bold text-orange-500">${o.id}</span><br>
+                        <span class="font-bold text-destaque">${o.id}</span><br>
                         <span class="text-xs opacity-50">${o.movel}</span>
                     </td>
                     <td class="p-3">
